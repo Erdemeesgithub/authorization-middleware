@@ -1,5 +1,5 @@
 const { User } = require("../models/userModel");
-
+const bcrypt = require('bcrypt')
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find({}, 
@@ -12,15 +12,18 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  const { username, password, email } = req.body || {};
+  const { username, password, email, roles } = req.body || {};
 
-  if (!username || !password || !email)
+  if (!username || !password || !email){
     return res.send("username, password and email is required");
+  }
+    
   try {
-    const userDocument = new User({ username, password, email });
-    const user = await user.save();
+    const encryptedPassword = await bcrypt.hash(password, 10)
+    const userDocument = new User({ username, password: encryptedPassword, email, roles });
+    const user = await userDocument.save();
     res.send(user);
-  } catch (error) {
+  } catch (error) { 
     res.send(error);
   }
 };

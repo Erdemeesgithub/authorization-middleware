@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ username });
 
-    const token = generateToken({ username, password });
+    const token = generateToken({ username, password, roles: user.roles });
 
     const isEqual = await bcrypt.compare(password, user.password);
     if (isEqual) return res.send(token);

@@ -1,6 +1,6 @@
 const { Category} = require("../models/categoryModel");
 
-exports.getCategory = async (req, res) => {
+exports.getCategories = async (req, res) => {
   try {
     const categories = await Category.find({})
     res.send(categories);

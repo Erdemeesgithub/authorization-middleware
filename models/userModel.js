@@ -6,7 +6,7 @@ const userSchema = new Schema({
   email: String,
   createdAt: { default: Date.now(), type: Date },
   roles: {
-    type: [], default: {"User": 101}
+    type: Object, default: {"User": 200}
   }
 });
 
